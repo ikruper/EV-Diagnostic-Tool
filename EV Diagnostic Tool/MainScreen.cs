@@ -42,7 +42,6 @@ namespace EV_Diagnostic_Tool
             catch (Exception)
             {
                 timerSample.Stop();
-                //TODO: close the port and so forth...
             }
         }
 
