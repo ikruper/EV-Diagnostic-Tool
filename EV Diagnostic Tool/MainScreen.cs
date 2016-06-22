@@ -35,9 +35,11 @@ namespace EV_Diagnostic_Tool
         {
             try
             {
-                controller.WriteLine("VOLTAGE 1");
-                Thread.Sleep(10);
+                controller.WriteLine("BATT 1 VOLT");
                 textBoxVoltage.Text = controller.ReadTo("\r\n");
+
+                controller.WriteLine("BATT 1 TEMP 1");
+                textBoxBatt1Temp1.Text = ConvertToDegreesC(controller.ReadTo("\r\n"));
             }
             catch (Exception)
             {
@@ -90,6 +92,11 @@ namespace EV_Diagnostic_Tool
                 labelStatus.Text = "Controller detected on " + controller.PortName;
                 timerSample.Start();
             }
+        }
+
+        private string ConvertToDegreesC(string voltage)
+        {
+            return (Convert.ToDouble(voltage) * 100).ToString();
         }
     }
 }
