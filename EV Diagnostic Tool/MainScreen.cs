@@ -35,11 +35,15 @@ namespace EV_Diagnostic_Tool
         {
             try
             {
+                //TODO: change the text of the new labels since the textboxes are deleted
                 controller.WriteLine("BATT 1 VOLT");
-                textBoxVoltage.Text = controller.ReadTo("\r\n");
+                //textBoxVoltage.Text = controller.ReadTo("\r\n");
 
                 controller.WriteLine("BATT 1 TEMP 1");
-                textBoxBatt1Temp1.Text = ConvertToDegreesC(controller.ReadTo("\r\n"));
+                //textBoxBatt1Temp1.Text = ConvertToDegreesC(controller.ReadTo("\r\n"));
+
+                controller.WriteLine("ACCELERATOR");
+                //textBoxAccelerator.Text = controller.ReadTo("\r\n");
             }
             catch (Exception)
             {
