@@ -31,11 +31,18 @@ namespace EV_Diagnostic_Tool
             FindController();
         }
 
+        private void buttonImport_Click(object sender, EventArgs e)
+        {
+            if (controller == null)
+                return;
+            controller.WriteLine("IMPORT");
+            //TODO: read the lines of data from the controller, save them locally, and plot them on a chart
+        }
+
         private void timerSample_Tick(object sender, EventArgs e)
         {
             try
             {
-                //TODO: change the text of the new labels since the textboxes are deleted
                 controller.WriteLine("BATT 1 VOLT");
                 //textBoxVoltage.Text = controller.ReadTo("\r\n");
 
@@ -59,32 +66,39 @@ namespace EV_Diagnostic_Tool
             progressBarStatus.Value = 0;
             progressBarStatus.Maximum = ports.Length;
             progressBarStatus.Step = 1;
+            int[] baud_rates = { 300, 600, 1200, 2400, 4800, 9600, 14400, 19200, 28800, 38400, 57600, 115200 };
 
-            SerialPort temp = new SerialPort();
-            temp.ReadTimeout = 250;
-            temp.BaudRate = 9600;
-            temp.DtrEnable = true;
-            temp.RtsEnable = true;
-            foreach (string port in ports)
+            foreach (int baud in baud_rates)
             {
-                temp.PortName = port;
-                temp.Open();
-                temp.WriteLine("EV CONTROLLER");
-                Thread.Sleep(10);
-                try
+                SerialPort temp = new SerialPort();
+                temp.ReadTimeout = 250;
+                temp.BaudRate = 9600;
+                temp.DtrEnable = true;
+                temp.RtsEnable = true;
+                foreach (string port in ports)
                 {
-                    if (temp.ReadTo("\r\n") == "EV Controller")
+                    temp.PortName = port;
+                    temp.Open();
+                    temp.WriteLine("EV CONTROLLER");
+                    Thread.Sleep(10);
+                    try
                     {
-                        controller = temp;
-                        break;
+                        if (temp.ReadTo("\r\n") == "EV Controller")
+                        {
+                            controller = temp;
+                            break;
+                        }
+                    }
+                    catch (TimeoutException)
+                    {
+                        progressBarStatus.PerformStep();
+                        temp.Close();
                     }
                 }
-                catch (TimeoutException)
-                {
-                    progressBarStatus.PerformStep();
-                    temp.Close();
-                }
+                if (controller != null)
+                    break;
             }
+            
             progressBarStatus.Value = 0;
             if (controller == null)
             {
