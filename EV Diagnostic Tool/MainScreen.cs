@@ -60,7 +60,12 @@ namespace EV_Diagnostic_Tool
 
         private void FindController()
         {
-            controller = null;
+            if (controller != null)
+            {
+                if (controller.IsOpen)
+                    controller.Close();
+                controller = null;
+            }
             labelStatus.Text = "Searching for controller...";
             string[] ports = SerialPort.GetPortNames();
             progressBarStatus.Value = 0;
@@ -72,7 +77,7 @@ namespace EV_Diagnostic_Tool
             {
                 SerialPort temp = new SerialPort();
                 temp.ReadTimeout = 250;
-                temp.BaudRate = 9600;
+                temp.BaudRate = baud;
                 temp.DtrEnable = true;
                 temp.RtsEnable = true;
                 foreach (string port in ports)
