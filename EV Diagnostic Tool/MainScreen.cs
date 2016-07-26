@@ -71,39 +71,34 @@ namespace EV_Diagnostic_Tool
             progressBarStatus.Value = 0;
             progressBarStatus.Maximum = ports.Length;
             progressBarStatus.Step = 1;
-            int[] baud_rates = { 300, 600, 1200, 2400, 4800, 9600, 14400, 19200, 28800, 38400, 57600, 115200 };
 
-            foreach (int baud in baud_rates)
+            SerialPort temp = new SerialPort();
+            temp.ReadTimeout = 250;
+            temp.BaudRate = 9600;
+            //temp.DtrEnable = true; //Enables this if using an Arduino Micro
+            //temp.RtsEnable = true; //Enables this if using an Arduino Micro
+            foreach (string port in ports)
             {
-                SerialPort temp = new SerialPort();
-                temp.ReadTimeout = 250;
-                temp.BaudRate = baud;
-                temp.DtrEnable = true;
-                temp.RtsEnable = true;
-                foreach (string port in ports)
+                temp.PortName = port;
+                temp.Open();
+                temp.WriteLine("EV CONTROLLER");
+                Thread.Sleep(10);
+                try
                 {
-                    temp.PortName = port;
-                    temp.Open();
-                    temp.WriteLine("EV CONTROLLER");
-                    Thread.Sleep(10);
-                    try
+                    string test = temp.ReadTo("\r\n");
+                    if (test == "EV Controller")
                     {
-                        if (temp.ReadTo("\r\n") == "EV Controller")
-                        {
-                            controller = temp;
-                            break;
-                        }
-                    }
-                    catch (TimeoutException)
-                    {
-                        progressBarStatus.PerformStep();
-                        temp.Close();
+                        controller = temp;
+                        break;
                     }
                 }
-                if (controller != null)
-                    break;
+                catch (TimeoutException)
+                {
+                    progressBarStatus.PerformStep();
+                    temp.Close();
+                }
             }
-            
+
             progressBarStatus.Value = 0;
             if (controller == null)
             {
