@@ -29,10 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainScreen));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.panel1 = new System.Windows.Forms.Panel();
             this.progressBarStatus = new System.Windows.Forms.ProgressBar();
             this.labelStatus = new System.Windows.Forms.Label();
@@ -133,10 +132,10 @@
             this.labelChip1Cell1C = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.tabPageLog = new System.Windows.Forms.TabPage();
+            this.buttonImport = new System.Windows.Forms.Button();
+            this.chartLog = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label29 = new System.Windows.Forms.Label();
-            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.buttonImport = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -148,8 +147,8 @@
             this.panel6.SuspendLayout();
             this.panel5.SuspendLayout();
             this.tabPageLog.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chartLog)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -234,7 +233,7 @@
             // 
             // timerSample
             // 
-            this.timerSample.Interval = 250;
+            this.timerSample.Interval = 200;
             this.timerSample.Tick += new System.EventHandler(this.timerSample_Tick);
             // 
             // panel3
@@ -286,9 +285,9 @@
             this.labelAcceleratorV.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelAcceleratorV.Location = new System.Drawing.Point(128, 47);
             this.labelAcceleratorV.Name = "labelAcceleratorV";
-            this.labelAcceleratorV.Size = new System.Drawing.Size(17, 16);
+            this.labelAcceleratorV.Size = new System.Drawing.Size(20, 16);
             this.labelAcceleratorV.TabIndex = 4;
-            this.labelAcceleratorV.Text = "V";
+            this.labelAcceleratorV.Text = "%";
             // 
             // label14
             // 
@@ -1218,13 +1217,36 @@
             // 
             this.tabPageLog.BackColor = System.Drawing.Color.LightGray;
             this.tabPageLog.Controls.Add(this.buttonImport);
-            this.tabPageLog.Controls.Add(this.chart1);
+            this.tabPageLog.Controls.Add(this.chartLog);
             this.tabPageLog.Location = new System.Drawing.Point(4, 22);
             this.tabPageLog.Name = "tabPageLog";
             this.tabPageLog.Padding = new System.Windows.Forms.Padding(3);
             this.tabPageLog.Size = new System.Drawing.Size(731, 435);
             this.tabPageLog.TabIndex = 1;
             this.tabPageLog.Text = "View Logs";
+            // 
+            // buttonImport
+            // 
+            this.buttonImport.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonImport.Location = new System.Drawing.Point(6, 6);
+            this.buttonImport.Name = "buttonImport";
+            this.buttonImport.Size = new System.Drawing.Size(155, 33);
+            this.buttonImport.TabIndex = 1;
+            this.buttonImport.Text = "Import";
+            this.buttonImport.UseVisualStyleBackColor = true;
+            this.buttonImport.Click += new System.EventHandler(this.buttonImport_Click);
+            // 
+            // chartLog
+            // 
+            chartArea3.Name = "ChartArea1";
+            this.chartLog.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.chartLog.Legends.Add(legend3);
+            this.chartLog.Location = new System.Drawing.Point(8, 45);
+            this.chartLog.Name = "chartLog";
+            this.chartLog.Size = new System.Drawing.Size(717, 384);
+            this.chartLog.TabIndex = 0;
+            this.chartLog.Text = "chart1";
             // 
             // pictureBox1
             // 
@@ -1246,33 +1268,6 @@
             this.label29.Size = new System.Drawing.Size(247, 33);
             this.label29.TabIndex = 6;
             this.label29.Text = "EV Dianostic Tool";
-            // 
-            // chart1
-            // 
-            chartArea4.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea4);
-            legend4.Name = "Legend1";
-            this.chart1.Legends.Add(legend4);
-            this.chart1.Location = new System.Drawing.Point(8, 45);
-            this.chart1.Name = "chart1";
-            series4.ChartArea = "ChartArea1";
-            series4.Legend = "Legend1";
-            series4.Name = "Series1";
-            this.chart1.Series.Add(series4);
-            this.chart1.Size = new System.Drawing.Size(717, 384);
-            this.chart1.TabIndex = 0;
-            this.chart1.Text = "chart1";
-            // 
-            // buttonImport
-            // 
-            this.buttonImport.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonImport.Location = new System.Drawing.Point(6, 6);
-            this.buttonImport.Name = "buttonImport";
-            this.buttonImport.Size = new System.Drawing.Size(155, 33);
-            this.buttonImport.TabIndex = 1;
-            this.buttonImport.Text = "Import";
-            this.buttonImport.UseVisualStyleBackColor = true;
-            this.buttonImport.Click += new System.EventHandler(this.buttonImport_Click);
             // 
             // MainScreen
             // 
@@ -1307,8 +1302,8 @@
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
             this.tabPageLog.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chartLog)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1419,7 +1414,7 @@
         private System.Windows.Forms.Label labelChip1Cell1C;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Button buttonImport;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chartLog;
     }
 }
 
