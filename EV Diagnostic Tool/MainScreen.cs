@@ -24,6 +24,7 @@ namespace EV_Diagnostic_Tool
 
         private void MainScreen_Load(object sender, EventArgs e)
         {
+            Thread.Sleep(3000);
             FindController();
         }
 
@@ -36,6 +37,10 @@ namespace EV_Diagnostic_Tool
         {
             if (controller == null)
                 return;
+            chartLogBattery.Series.Clear();
+            chartLogMotor.Series.Clear();
+            progressBarImport.Value = 0;
+
             timerSample.Stop();
             Thread.Sleep(500);
             controller.DiscardInBuffer();
@@ -46,13 +51,24 @@ namespace EV_Diagnostic_Tool
             List<string> data = new List<string>();
             string response = controller.ReadTo("\r\n");
             string series = response;
+
             while (true)
             {
                 response = controller.ReadTo("\r\n");
+                
+
                 if (response != "END")
-                    data.Add(response);
+                {
+                    if (response.Substring(0, 10) == "COMPLETION")
+                        progressBarImport.Value = Convert.ToInt16(response.Substring(10));
+                    else
+                        data.Add(response);
+                }
                 else
+                {
+                    progressBarImport.Value = 100;
                     break;
+                }
             }
 
             double[] temp1 = new double[data.Count];
@@ -62,6 +78,7 @@ namespace EV_Diagnostic_Tool
             double[] temp5 = new double[data.Count];
             double[] accel = new double[data.Count];
             double[] time = new double[data.Count];
+                
             for (int count = 0; count < data.Count; count++)
             {
                 double[] entry_vals = Array.ConvertAll(data[count].Split(','), double.Parse);
@@ -75,9 +92,9 @@ namespace EV_Diagnostic_Tool
             }
 
             string[] series_vals = series.Split(',');
-            for (int count = 0; count < 6; count++)
+            for (int count = 0; count < 5; count++)
             {
-                Series sensor = chartLog.Series.Add(series_vals[count]);
+                Series sensor = chartLogBattery.Series.Add(series_vals[count]);
                 sensor.ChartType = SeriesChartType.Line;
                 for (int count2 = 0; count2 < data.Count; count2++)
                 {
@@ -98,6 +115,17 @@ namespace EV_Diagnostic_Tool
                         case 4:
                             sensor.Points.AddXY(time[count2], temp5[count2]);
                             break;
+                    }
+                }
+            }
+            for (int count = 5; count < 6; count++)
+            {
+                Series sensor = chartLogMotor.Series.Add(series_vals[count]);
+                sensor.ChartType = SeriesChartType.Line;
+                for (int count2 = 0; count2 < data.Count; count2++)
+                {
+                    switch (count)
+                    {
                         case 5:
                             sensor.Points.AddXY(time[count2], accel[count2]);
                             break;
@@ -109,32 +137,29 @@ namespace EV_Diagnostic_Tool
 
         private void timerSample_Tick(object sender, EventArgs e)
         {
-            controller.DiscardInBuffer();
-            controller.DiscardOutBuffer();
+            string response = string.Empty;
             try
             {
-                /*controller.WriteLine("TEMP 0");
-                labelChip1Cell1C.Text = controller.ReadTo("\r\n");
+                controller.DiscardInBuffer();
+                controller.DiscardOutBuffer();
 
-                controller.WriteLine("TEMP 1");
-                labelChip1Cell2C.Text = controller.ReadTo("\r\n");
-
-                controller.WriteLine("TEMP 2");
-                labelChip1Cell3C.Text = controller.ReadTo("\r\n");
-
-                controller.WriteLine("TEMP 3");
-                labelChip1Cell4C.Text = controller.ReadTo("\r\n");
-
-                controller.WriteLine("TEMP 4");
-                labelChip1Cell5C.Text = controller.ReadTo("\r\n");
-
-                controller.WriteLine("ACCEL");
-                labelAcceleratorV.Text = controller.ReadTo("\r\n");*/
+                controller.WriteLine("SENSORS");
+                response = controller.ReadTo("\r\n");
             }
             catch (Exception)
             {
                 timerSample.Stop();
+                controller = null;
+                labelStatus.Text = "Controller not detected";
             }
+
+            string[] sensor_vals = response.Split(',');
+            labelChip1Cell1C.Text = sensor_vals[0] + " C";
+            labelChip1Cell2C.Text = sensor_vals[1] + " C";
+            labelChip1Cell3C.Text = sensor_vals[2] + " C";
+            labelChip1Cell4C.Text = sensor_vals[3] + " C";
+            labelChip1Cell5C.Text = sensor_vals[4] + " C";
+            labelAcceleratorV.Text = sensor_vals[5] + " %";
         }
 
         private void FindController()
@@ -155,7 +180,6 @@ namespace EV_Diagnostic_Tool
             temp.ReadTimeout = 500;
             temp.BaudRate = 9600;
             temp.DataBits = 8;
-            temp.Parity = Parity.Even;
             temp.StopBits = StopBits.One;   
             //temp.DtrEnable = true; //Enables this if using an Arduino Micro
             //temp.RtsEnable = true; //Enables this if using an Arduino Micro
@@ -166,7 +190,7 @@ namespace EV_Diagnostic_Tool
                 temp.DiscardOutBuffer();
                 temp.DiscardInBuffer();
                 temp.WriteLine("EV CONTROLLER");
-                Thread.Sleep(100);
+                Thread.Sleep(500);
                 try
                 {
                     string response = temp.ReadTo("\r\n");

@@ -29,8 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainScreen));
             this.panel1 = new System.Windows.Forms.Panel();
             this.progressBarStatus = new System.Windows.Forms.ProgressBar();
@@ -50,6 +52,8 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPageStatus = new System.Windows.Forms.TabPage();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.numericUpDownBatteryBank = new System.Windows.Forms.NumericUpDown();
             this.panel8 = new System.Windows.Forms.Panel();
             this.label67 = new System.Windows.Forms.Label();
             this.labelChip4Cell6V = new System.Windows.Forms.Label();
@@ -132,22 +136,26 @@
             this.labelChip1Cell1C = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.tabPageLog = new System.Windows.Forms.TabPage();
+            this.chartLogBattery = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.buttonImport = new System.Windows.Forms.Button();
-            this.chartLog = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.chartLogMotor = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label29 = new System.Windows.Forms.Label();
+            this.progressBarImport = new System.Windows.Forms.ProgressBar();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPageStatus.SuspendLayout();
             this.panel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownBatteryBank)).BeginInit();
             this.panel8.SuspendLayout();
             this.panel7.SuspendLayout();
             this.panel6.SuspendLayout();
             this.panel5.SuspendLayout();
             this.tabPageLog.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chartLog)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chartLogBattery)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chartLogMotor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -325,6 +333,8 @@
             // panel4
             // 
             this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel4.Controls.Add(this.label2);
+            this.panel4.Controls.Add(this.numericUpDownBatteryBank);
             this.panel4.Controls.Add(this.panel8);
             this.panel4.Controls.Add(this.panel7);
             this.panel4.Controls.Add(this.panel6);
@@ -334,6 +344,38 @@
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(719, 298);
             this.panel4.TabIndex = 3;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(570, 13);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(84, 16);
+            this.label2.TabIndex = 57;
+            this.label2.Text = "Battery Bank";
+            // 
+            // numericUpDownBatteryBank
+            // 
+            this.numericUpDownBatteryBank.Location = new System.Drawing.Point(660, 12);
+            this.numericUpDownBatteryBank.Maximum = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
+            this.numericUpDownBatteryBank.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDownBatteryBank.Name = "numericUpDownBatteryBank";
+            this.numericUpDownBatteryBank.Size = new System.Drawing.Size(36, 20);
+            this.numericUpDownBatteryBank.TabIndex = 56;
+            this.numericUpDownBatteryBank.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // panel8
             // 
@@ -376,7 +418,7 @@
             // 
             this.labelChip4Cell6V.AutoSize = true;
             this.labelChip4Cell6V.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChip4Cell6V.Location = new System.Drawing.Point(92, 203);
+            this.labelChip4Cell6V.Location = new System.Drawing.Point(59, 203);
             this.labelChip4Cell6V.Name = "labelChip4Cell6V";
             this.labelChip4Cell6V.Size = new System.Drawing.Size(17, 16);
             this.labelChip4Cell6V.TabIndex = 53;
@@ -396,7 +438,7 @@
             // 
             this.labelChip4Cell6C.AutoSize = true;
             this.labelChip4Cell6C.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChip4Cell6C.Location = new System.Drawing.Point(143, 203);
+            this.labelChip4Cell6C.Location = new System.Drawing.Point(110, 203);
             this.labelChip4Cell6C.Name = "labelChip4Cell6C";
             this.labelChip4Cell6C.Size = new System.Drawing.Size(17, 16);
             this.labelChip4Cell6C.TabIndex = 51;
@@ -406,7 +448,7 @@
             // 
             this.labelChip4Cell5V.AutoSize = true;
             this.labelChip4Cell5V.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChip4Cell5V.Location = new System.Drawing.Point(92, 171);
+            this.labelChip4Cell5V.Location = new System.Drawing.Point(59, 171);
             this.labelChip4Cell5V.Name = "labelChip4Cell5V";
             this.labelChip4Cell5V.Size = new System.Drawing.Size(17, 16);
             this.labelChip4Cell5V.TabIndex = 50;
@@ -426,7 +468,7 @@
             // 
             this.labelChip4Cell5C.AutoSize = true;
             this.labelChip4Cell5C.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChip4Cell5C.Location = new System.Drawing.Point(143, 171);
+            this.labelChip4Cell5C.Location = new System.Drawing.Point(110, 171);
             this.labelChip4Cell5C.Name = "labelChip4Cell5C";
             this.labelChip4Cell5C.Size = new System.Drawing.Size(17, 16);
             this.labelChip4Cell5C.TabIndex = 48;
@@ -436,7 +478,7 @@
             // 
             this.labelChip4Cell4V.AutoSize = true;
             this.labelChip4Cell4V.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChip4Cell4V.Location = new System.Drawing.Point(92, 139);
+            this.labelChip4Cell4V.Location = new System.Drawing.Point(59, 139);
             this.labelChip4Cell4V.Name = "labelChip4Cell4V";
             this.labelChip4Cell4V.Size = new System.Drawing.Size(17, 16);
             this.labelChip4Cell4V.TabIndex = 47;
@@ -456,7 +498,7 @@
             // 
             this.labelChip4Cell4C.AutoSize = true;
             this.labelChip4Cell4C.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChip4Cell4C.Location = new System.Drawing.Point(143, 139);
+            this.labelChip4Cell4C.Location = new System.Drawing.Point(110, 139);
             this.labelChip4Cell4C.Name = "labelChip4Cell4C";
             this.labelChip4Cell4C.Size = new System.Drawing.Size(17, 16);
             this.labelChip4Cell4C.TabIndex = 45;
@@ -466,7 +508,7 @@
             // 
             this.labelChip4Cell3V.AutoSize = true;
             this.labelChip4Cell3V.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChip4Cell3V.Location = new System.Drawing.Point(92, 107);
+            this.labelChip4Cell3V.Location = new System.Drawing.Point(59, 107);
             this.labelChip4Cell3V.Name = "labelChip4Cell3V";
             this.labelChip4Cell3V.Size = new System.Drawing.Size(17, 16);
             this.labelChip4Cell3V.TabIndex = 44;
@@ -486,7 +528,7 @@
             // 
             this.labelChip4Cell3C.AutoSize = true;
             this.labelChip4Cell3C.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChip4Cell3C.Location = new System.Drawing.Point(143, 107);
+            this.labelChip4Cell3C.Location = new System.Drawing.Point(110, 107);
             this.labelChip4Cell3C.Name = "labelChip4Cell3C";
             this.labelChip4Cell3C.Size = new System.Drawing.Size(17, 16);
             this.labelChip4Cell3C.TabIndex = 42;
@@ -496,7 +538,7 @@
             // 
             this.labelChip4Cell2V.AutoSize = true;
             this.labelChip4Cell2V.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChip4Cell2V.Location = new System.Drawing.Point(92, 75);
+            this.labelChip4Cell2V.Location = new System.Drawing.Point(59, 75);
             this.labelChip4Cell2V.Name = "labelChip4Cell2V";
             this.labelChip4Cell2V.Size = new System.Drawing.Size(17, 16);
             this.labelChip4Cell2V.TabIndex = 41;
@@ -516,7 +558,7 @@
             // 
             this.labelChip4Cell2C.AutoSize = true;
             this.labelChip4Cell2C.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChip4Cell2C.Location = new System.Drawing.Point(143, 75);
+            this.labelChip4Cell2C.Location = new System.Drawing.Point(110, 75);
             this.labelChip4Cell2C.Name = "labelChip4Cell2C";
             this.labelChip4Cell2C.Size = new System.Drawing.Size(17, 16);
             this.labelChip4Cell2C.TabIndex = 39;
@@ -526,7 +568,7 @@
             // 
             this.labelChip4Cell1V.AutoSize = true;
             this.labelChip4Cell1V.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChip4Cell1V.Location = new System.Drawing.Point(92, 43);
+            this.labelChip4Cell1V.Location = new System.Drawing.Point(59, 43);
             this.labelChip4Cell1V.Name = "labelChip4Cell1V";
             this.labelChip4Cell1V.Size = new System.Drawing.Size(17, 16);
             this.labelChip4Cell1V.TabIndex = 38;
@@ -546,7 +588,7 @@
             // 
             this.labelChip4Cell1C.AutoSize = true;
             this.labelChip4Cell1C.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChip4Cell1C.Location = new System.Drawing.Point(143, 43);
+            this.labelChip4Cell1C.Location = new System.Drawing.Point(110, 43);
             this.labelChip4Cell1C.Name = "labelChip4Cell1C";
             this.labelChip4Cell1C.Size = new System.Drawing.Size(17, 16);
             this.labelChip4Cell1C.TabIndex = 36;
@@ -593,7 +635,7 @@
             // 
             this.labelChip3Cell6V.AutoSize = true;
             this.labelChip3Cell6V.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChip3Cell6V.Location = new System.Drawing.Point(92, 203);
+            this.labelChip3Cell6V.Location = new System.Drawing.Point(59, 203);
             this.labelChip3Cell6V.Name = "labelChip3Cell6V";
             this.labelChip3Cell6V.Size = new System.Drawing.Size(17, 16);
             this.labelChip3Cell6V.TabIndex = 53;
@@ -613,7 +655,7 @@
             // 
             this.labelChip3Cell6C.AutoSize = true;
             this.labelChip3Cell6C.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChip3Cell6C.Location = new System.Drawing.Point(143, 203);
+            this.labelChip3Cell6C.Location = new System.Drawing.Point(110, 203);
             this.labelChip3Cell6C.Name = "labelChip3Cell6C";
             this.labelChip3Cell6C.Size = new System.Drawing.Size(17, 16);
             this.labelChip3Cell6C.TabIndex = 51;
@@ -623,7 +665,7 @@
             // 
             this.labelChip3Cell5V.AutoSize = true;
             this.labelChip3Cell5V.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChip3Cell5V.Location = new System.Drawing.Point(92, 171);
+            this.labelChip3Cell5V.Location = new System.Drawing.Point(59, 171);
             this.labelChip3Cell5V.Name = "labelChip3Cell5V";
             this.labelChip3Cell5V.Size = new System.Drawing.Size(17, 16);
             this.labelChip3Cell5V.TabIndex = 50;
@@ -643,7 +685,7 @@
             // 
             this.labelChip3Cell5C.AutoSize = true;
             this.labelChip3Cell5C.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChip3Cell5C.Location = new System.Drawing.Point(143, 171);
+            this.labelChip3Cell5C.Location = new System.Drawing.Point(110, 171);
             this.labelChip3Cell5C.Name = "labelChip3Cell5C";
             this.labelChip3Cell5C.Size = new System.Drawing.Size(17, 16);
             this.labelChip3Cell5C.TabIndex = 48;
@@ -653,7 +695,7 @@
             // 
             this.labelChip3Cell4V.AutoSize = true;
             this.labelChip3Cell4V.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChip3Cell4V.Location = new System.Drawing.Point(92, 139);
+            this.labelChip3Cell4V.Location = new System.Drawing.Point(59, 139);
             this.labelChip3Cell4V.Name = "labelChip3Cell4V";
             this.labelChip3Cell4V.Size = new System.Drawing.Size(17, 16);
             this.labelChip3Cell4V.TabIndex = 47;
@@ -673,7 +715,7 @@
             // 
             this.labelChip3Cell4C.AutoSize = true;
             this.labelChip3Cell4C.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChip3Cell4C.Location = new System.Drawing.Point(143, 139);
+            this.labelChip3Cell4C.Location = new System.Drawing.Point(110, 139);
             this.labelChip3Cell4C.Name = "labelChip3Cell4C";
             this.labelChip3Cell4C.Size = new System.Drawing.Size(17, 16);
             this.labelChip3Cell4C.TabIndex = 45;
@@ -683,7 +725,7 @@
             // 
             this.labelChip3Cell3V.AutoSize = true;
             this.labelChip3Cell3V.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChip3Cell3V.Location = new System.Drawing.Point(92, 107);
+            this.labelChip3Cell3V.Location = new System.Drawing.Point(59, 107);
             this.labelChip3Cell3V.Name = "labelChip3Cell3V";
             this.labelChip3Cell3V.Size = new System.Drawing.Size(17, 16);
             this.labelChip3Cell3V.TabIndex = 44;
@@ -703,7 +745,7 @@
             // 
             this.labelChip3Cell3C.AutoSize = true;
             this.labelChip3Cell3C.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChip3Cell3C.Location = new System.Drawing.Point(143, 107);
+            this.labelChip3Cell3C.Location = new System.Drawing.Point(110, 107);
             this.labelChip3Cell3C.Name = "labelChip3Cell3C";
             this.labelChip3Cell3C.Size = new System.Drawing.Size(17, 16);
             this.labelChip3Cell3C.TabIndex = 42;
@@ -713,7 +755,7 @@
             // 
             this.labelChip3Cell2V.AutoSize = true;
             this.labelChip3Cell2V.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChip3Cell2V.Location = new System.Drawing.Point(92, 75);
+            this.labelChip3Cell2V.Location = new System.Drawing.Point(59, 75);
             this.labelChip3Cell2V.Name = "labelChip3Cell2V";
             this.labelChip3Cell2V.Size = new System.Drawing.Size(17, 16);
             this.labelChip3Cell2V.TabIndex = 41;
@@ -733,7 +775,7 @@
             // 
             this.labelChip3Cell2C.AutoSize = true;
             this.labelChip3Cell2C.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChip3Cell2C.Location = new System.Drawing.Point(143, 75);
+            this.labelChip3Cell2C.Location = new System.Drawing.Point(110, 75);
             this.labelChip3Cell2C.Name = "labelChip3Cell2C";
             this.labelChip3Cell2C.Size = new System.Drawing.Size(17, 16);
             this.labelChip3Cell2C.TabIndex = 39;
@@ -743,7 +785,7 @@
             // 
             this.labelChip3Cell1V.AutoSize = true;
             this.labelChip3Cell1V.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChip3Cell1V.Location = new System.Drawing.Point(92, 43);
+            this.labelChip3Cell1V.Location = new System.Drawing.Point(59, 43);
             this.labelChip3Cell1V.Name = "labelChip3Cell1V";
             this.labelChip3Cell1V.Size = new System.Drawing.Size(17, 16);
             this.labelChip3Cell1V.TabIndex = 38;
@@ -763,7 +805,7 @@
             // 
             this.labelChip3Cell1C.AutoSize = true;
             this.labelChip3Cell1C.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChip3Cell1C.Location = new System.Drawing.Point(143, 43);
+            this.labelChip3Cell1C.Location = new System.Drawing.Point(110, 43);
             this.labelChip3Cell1C.Name = "labelChip3Cell1C";
             this.labelChip3Cell1C.Size = new System.Drawing.Size(17, 16);
             this.labelChip3Cell1C.TabIndex = 36;
@@ -810,7 +852,7 @@
             // 
             this.labelChip2Cell6V.AutoSize = true;
             this.labelChip2Cell6V.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChip2Cell6V.Location = new System.Drawing.Point(92, 203);
+            this.labelChip2Cell6V.Location = new System.Drawing.Point(59, 203);
             this.labelChip2Cell6V.Name = "labelChip2Cell6V";
             this.labelChip2Cell6V.Size = new System.Drawing.Size(17, 16);
             this.labelChip2Cell6V.TabIndex = 53;
@@ -830,7 +872,7 @@
             // 
             this.labelChip2Cell6C.AutoSize = true;
             this.labelChip2Cell6C.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChip2Cell6C.Location = new System.Drawing.Point(143, 203);
+            this.labelChip2Cell6C.Location = new System.Drawing.Point(110, 203);
             this.labelChip2Cell6C.Name = "labelChip2Cell6C";
             this.labelChip2Cell6C.Size = new System.Drawing.Size(17, 16);
             this.labelChip2Cell6C.TabIndex = 51;
@@ -840,7 +882,7 @@
             // 
             this.labelChip2Cell5V.AutoSize = true;
             this.labelChip2Cell5V.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChip2Cell5V.Location = new System.Drawing.Point(92, 171);
+            this.labelChip2Cell5V.Location = new System.Drawing.Point(59, 171);
             this.labelChip2Cell5V.Name = "labelChip2Cell5V";
             this.labelChip2Cell5V.Size = new System.Drawing.Size(17, 16);
             this.labelChip2Cell5V.TabIndex = 50;
@@ -860,7 +902,7 @@
             // 
             this.labelChip2Cell5C.AutoSize = true;
             this.labelChip2Cell5C.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChip2Cell5C.Location = new System.Drawing.Point(143, 171);
+            this.labelChip2Cell5C.Location = new System.Drawing.Point(110, 171);
             this.labelChip2Cell5C.Name = "labelChip2Cell5C";
             this.labelChip2Cell5C.Size = new System.Drawing.Size(17, 16);
             this.labelChip2Cell5C.TabIndex = 48;
@@ -870,7 +912,7 @@
             // 
             this.labelChip2Cell4V.AutoSize = true;
             this.labelChip2Cell4V.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChip2Cell4V.Location = new System.Drawing.Point(92, 139);
+            this.labelChip2Cell4V.Location = new System.Drawing.Point(59, 139);
             this.labelChip2Cell4V.Name = "labelChip2Cell4V";
             this.labelChip2Cell4V.Size = new System.Drawing.Size(17, 16);
             this.labelChip2Cell4V.TabIndex = 47;
@@ -890,7 +932,7 @@
             // 
             this.labelChip2Cell4C.AutoSize = true;
             this.labelChip2Cell4C.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChip2Cell4C.Location = new System.Drawing.Point(143, 139);
+            this.labelChip2Cell4C.Location = new System.Drawing.Point(110, 139);
             this.labelChip2Cell4C.Name = "labelChip2Cell4C";
             this.labelChip2Cell4C.Size = new System.Drawing.Size(17, 16);
             this.labelChip2Cell4C.TabIndex = 45;
@@ -900,7 +942,7 @@
             // 
             this.labelChip2Cell3V.AutoSize = true;
             this.labelChip2Cell3V.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChip2Cell3V.Location = new System.Drawing.Point(92, 107);
+            this.labelChip2Cell3V.Location = new System.Drawing.Point(59, 107);
             this.labelChip2Cell3V.Name = "labelChip2Cell3V";
             this.labelChip2Cell3V.Size = new System.Drawing.Size(17, 16);
             this.labelChip2Cell3V.TabIndex = 44;
@@ -920,7 +962,7 @@
             // 
             this.labelChip2Cell3C.AutoSize = true;
             this.labelChip2Cell3C.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChip2Cell3C.Location = new System.Drawing.Point(143, 107);
+            this.labelChip2Cell3C.Location = new System.Drawing.Point(110, 107);
             this.labelChip2Cell3C.Name = "labelChip2Cell3C";
             this.labelChip2Cell3C.Size = new System.Drawing.Size(17, 16);
             this.labelChip2Cell3C.TabIndex = 42;
@@ -930,7 +972,7 @@
             // 
             this.labelChip2Cell2V.AutoSize = true;
             this.labelChip2Cell2V.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChip2Cell2V.Location = new System.Drawing.Point(92, 75);
+            this.labelChip2Cell2V.Location = new System.Drawing.Point(59, 75);
             this.labelChip2Cell2V.Name = "labelChip2Cell2V";
             this.labelChip2Cell2V.Size = new System.Drawing.Size(17, 16);
             this.labelChip2Cell2V.TabIndex = 41;
@@ -950,7 +992,7 @@
             // 
             this.labelChip2Cell2C.AutoSize = true;
             this.labelChip2Cell2C.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChip2Cell2C.Location = new System.Drawing.Point(143, 75);
+            this.labelChip2Cell2C.Location = new System.Drawing.Point(110, 75);
             this.labelChip2Cell2C.Name = "labelChip2Cell2C";
             this.labelChip2Cell2C.Size = new System.Drawing.Size(17, 16);
             this.labelChip2Cell2C.TabIndex = 39;
@@ -960,7 +1002,7 @@
             // 
             this.labelChip2Cell1V.AutoSize = true;
             this.labelChip2Cell1V.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChip2Cell1V.Location = new System.Drawing.Point(92, 43);
+            this.labelChip2Cell1V.Location = new System.Drawing.Point(59, 43);
             this.labelChip2Cell1V.Name = "labelChip2Cell1V";
             this.labelChip2Cell1V.Size = new System.Drawing.Size(17, 16);
             this.labelChip2Cell1V.TabIndex = 38;
@@ -980,7 +1022,7 @@
             // 
             this.labelChip2Cell1C.AutoSize = true;
             this.labelChip2Cell1C.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChip2Cell1C.Location = new System.Drawing.Point(143, 43);
+            this.labelChip2Cell1C.Location = new System.Drawing.Point(110, 43);
             this.labelChip2Cell1C.Name = "labelChip2Cell1C";
             this.labelChip2Cell1C.Size = new System.Drawing.Size(17, 16);
             this.labelChip2Cell1C.TabIndex = 36;
@@ -1027,7 +1069,7 @@
             // 
             this.labelChip1Cell6V.AutoSize = true;
             this.labelChip1Cell6V.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChip1Cell6V.Location = new System.Drawing.Point(92, 203);
+            this.labelChip1Cell6V.Location = new System.Drawing.Point(59, 203);
             this.labelChip1Cell6V.Name = "labelChip1Cell6V";
             this.labelChip1Cell6V.Size = new System.Drawing.Size(17, 16);
             this.labelChip1Cell6V.TabIndex = 53;
@@ -1047,7 +1089,7 @@
             // 
             this.labelChip1Cell6C.AutoSize = true;
             this.labelChip1Cell6C.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChip1Cell6C.Location = new System.Drawing.Point(143, 203);
+            this.labelChip1Cell6C.Location = new System.Drawing.Point(110, 203);
             this.labelChip1Cell6C.Name = "labelChip1Cell6C";
             this.labelChip1Cell6C.Size = new System.Drawing.Size(17, 16);
             this.labelChip1Cell6C.TabIndex = 51;
@@ -1057,7 +1099,7 @@
             // 
             this.labelChip1Cell5V.AutoSize = true;
             this.labelChip1Cell5V.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChip1Cell5V.Location = new System.Drawing.Point(92, 171);
+            this.labelChip1Cell5V.Location = new System.Drawing.Point(59, 171);
             this.labelChip1Cell5V.Name = "labelChip1Cell5V";
             this.labelChip1Cell5V.Size = new System.Drawing.Size(17, 16);
             this.labelChip1Cell5V.TabIndex = 50;
@@ -1077,7 +1119,7 @@
             // 
             this.labelChip1Cell5C.AutoSize = true;
             this.labelChip1Cell5C.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChip1Cell5C.Location = new System.Drawing.Point(143, 171);
+            this.labelChip1Cell5C.Location = new System.Drawing.Point(110, 171);
             this.labelChip1Cell5C.Name = "labelChip1Cell5C";
             this.labelChip1Cell5C.Size = new System.Drawing.Size(17, 16);
             this.labelChip1Cell5C.TabIndex = 48;
@@ -1087,7 +1129,7 @@
             // 
             this.labelChip1Cell4V.AutoSize = true;
             this.labelChip1Cell4V.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChip1Cell4V.Location = new System.Drawing.Point(92, 139);
+            this.labelChip1Cell4V.Location = new System.Drawing.Point(59, 139);
             this.labelChip1Cell4V.Name = "labelChip1Cell4V";
             this.labelChip1Cell4V.Size = new System.Drawing.Size(17, 16);
             this.labelChip1Cell4V.TabIndex = 47;
@@ -1107,7 +1149,7 @@
             // 
             this.labelChip1Cell4C.AutoSize = true;
             this.labelChip1Cell4C.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChip1Cell4C.Location = new System.Drawing.Point(143, 139);
+            this.labelChip1Cell4C.Location = new System.Drawing.Point(110, 139);
             this.labelChip1Cell4C.Name = "labelChip1Cell4C";
             this.labelChip1Cell4C.Size = new System.Drawing.Size(17, 16);
             this.labelChip1Cell4C.TabIndex = 45;
@@ -1117,7 +1159,7 @@
             // 
             this.labelChip1Cell3V.AutoSize = true;
             this.labelChip1Cell3V.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChip1Cell3V.Location = new System.Drawing.Point(92, 107);
+            this.labelChip1Cell3V.Location = new System.Drawing.Point(59, 107);
             this.labelChip1Cell3V.Name = "labelChip1Cell3V";
             this.labelChip1Cell3V.Size = new System.Drawing.Size(17, 16);
             this.labelChip1Cell3V.TabIndex = 44;
@@ -1137,7 +1179,7 @@
             // 
             this.labelChip1Cell3C.AutoSize = true;
             this.labelChip1Cell3C.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChip1Cell3C.Location = new System.Drawing.Point(143, 107);
+            this.labelChip1Cell3C.Location = new System.Drawing.Point(110, 107);
             this.labelChip1Cell3C.Name = "labelChip1Cell3C";
             this.labelChip1Cell3C.Size = new System.Drawing.Size(17, 16);
             this.labelChip1Cell3C.TabIndex = 42;
@@ -1147,7 +1189,7 @@
             // 
             this.labelChip1Cell2V.AutoSize = true;
             this.labelChip1Cell2V.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChip1Cell2V.Location = new System.Drawing.Point(92, 75);
+            this.labelChip1Cell2V.Location = new System.Drawing.Point(59, 75);
             this.labelChip1Cell2V.Name = "labelChip1Cell2V";
             this.labelChip1Cell2V.Size = new System.Drawing.Size(17, 16);
             this.labelChip1Cell2V.TabIndex = 41;
@@ -1167,7 +1209,7 @@
             // 
             this.labelChip1Cell2C.AutoSize = true;
             this.labelChip1Cell2C.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChip1Cell2C.Location = new System.Drawing.Point(143, 75);
+            this.labelChip1Cell2C.Location = new System.Drawing.Point(110, 75);
             this.labelChip1Cell2C.Name = "labelChip1Cell2C";
             this.labelChip1Cell2C.Size = new System.Drawing.Size(17, 16);
             this.labelChip1Cell2C.TabIndex = 39;
@@ -1177,7 +1219,7 @@
             // 
             this.labelChip1Cell1V.AutoSize = true;
             this.labelChip1Cell1V.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChip1Cell1V.Location = new System.Drawing.Point(92, 43);
+            this.labelChip1Cell1V.Location = new System.Drawing.Point(59, 43);
             this.labelChip1Cell1V.Name = "labelChip1Cell1V";
             this.labelChip1Cell1V.Size = new System.Drawing.Size(17, 16);
             this.labelChip1Cell1V.TabIndex = 38;
@@ -1197,7 +1239,7 @@
             // 
             this.labelChip1Cell1C.AutoSize = true;
             this.labelChip1Cell1C.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChip1Cell1C.Location = new System.Drawing.Point(143, 43);
+            this.labelChip1Cell1C.Location = new System.Drawing.Point(110, 43);
             this.labelChip1Cell1C.Name = "labelChip1Cell1C";
             this.labelChip1Cell1C.Size = new System.Drawing.Size(17, 16);
             this.labelChip1Cell1C.TabIndex = 36;
@@ -1216,14 +1258,28 @@
             // tabPageLog
             // 
             this.tabPageLog.BackColor = System.Drawing.Color.LightGray;
+            this.tabPageLog.Controls.Add(this.progressBarImport);
+            this.tabPageLog.Controls.Add(this.chartLogBattery);
             this.tabPageLog.Controls.Add(this.buttonImport);
-            this.tabPageLog.Controls.Add(this.chartLog);
+            this.tabPageLog.Controls.Add(this.chartLogMotor);
             this.tabPageLog.Location = new System.Drawing.Point(4, 22);
             this.tabPageLog.Name = "tabPageLog";
             this.tabPageLog.Padding = new System.Windows.Forms.Padding(3);
             this.tabPageLog.Size = new System.Drawing.Size(731, 435);
             this.tabPageLog.TabIndex = 1;
             this.tabPageLog.Text = "View Logs";
+            // 
+            // chartLogBattery
+            // 
+            chartArea5.Name = "ChartArea1";
+            this.chartLogBattery.ChartAreas.Add(chartArea5);
+            legend5.Name = "Legend1";
+            this.chartLogBattery.Legends.Add(legend5);
+            this.chartLogBattery.Location = new System.Drawing.Point(8, 242);
+            this.chartLogBattery.Name = "chartLogBattery";
+            this.chartLogBattery.Size = new System.Drawing.Size(717, 187);
+            this.chartLogBattery.TabIndex = 2;
+            this.chartLogBattery.Text = "chart1";
             // 
             // buttonImport
             // 
@@ -1236,17 +1292,17 @@
             this.buttonImport.UseVisualStyleBackColor = true;
             this.buttonImport.Click += new System.EventHandler(this.buttonImport_Click);
             // 
-            // chartLog
+            // chartLogMotor
             // 
-            chartArea3.Name = "ChartArea1";
-            this.chartLog.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            this.chartLog.Legends.Add(legend3);
-            this.chartLog.Location = new System.Drawing.Point(8, 45);
-            this.chartLog.Name = "chartLog";
-            this.chartLog.Size = new System.Drawing.Size(717, 384);
-            this.chartLog.TabIndex = 0;
-            this.chartLog.Text = "chart1";
+            chartArea6.Name = "ChartArea1";
+            this.chartLogMotor.ChartAreas.Add(chartArea6);
+            legend6.Name = "Legend1";
+            this.chartLogMotor.Legends.Add(legend6);
+            this.chartLogMotor.Location = new System.Drawing.Point(8, 49);
+            this.chartLogMotor.Name = "chartLogMotor";
+            this.chartLogMotor.Size = new System.Drawing.Size(717, 187);
+            this.chartLogMotor.TabIndex = 0;
+            this.chartLogMotor.Text = "chart1";
             // 
             // pictureBox1
             // 
@@ -1263,11 +1319,18 @@
             // 
             this.label29.AutoSize = true;
             this.label29.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label29.Location = new System.Drawing.Point(337, 34);
+            this.label29.Location = new System.Drawing.Point(333, 34);
             this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(247, 33);
+            this.label29.Size = new System.Drawing.Size(263, 33);
             this.label29.TabIndex = 6;
-            this.label29.Text = "EV Dianostic Tool";
+            this.label29.Text = "EV Diagnostic Tool";
+            // 
+            // progressBarImport
+            // 
+            this.progressBarImport.Location = new System.Drawing.Point(167, 6);
+            this.progressBarImport.Name = "progressBarImport";
+            this.progressBarImport.Size = new System.Drawing.Size(557, 32);
+            this.progressBarImport.TabIndex = 3;
             // 
             // MainScreen
             // 
@@ -1293,6 +1356,7 @@
             this.tabPageStatus.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownBatteryBank)).EndInit();
             this.panel8.ResumeLayout(false);
             this.panel8.PerformLayout();
             this.panel7.ResumeLayout(false);
@@ -1302,7 +1366,8 @@
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
             this.tabPageLog.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.chartLog)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chartLogBattery)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chartLogMotor)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -1414,7 +1479,11 @@
         private System.Windows.Forms.Label labelChip1Cell1C;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Button buttonImport;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chartLog;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chartLogMotor;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.NumericUpDown numericUpDownBatteryBank;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chartLogBattery;
+        private System.Windows.Forms.ProgressBar progressBarImport;
     }
 }
 
