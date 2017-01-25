@@ -15,7 +15,8 @@ namespace EV_Diagnostic_Tool
 {
     public partial class MainScreen : Form
     {
-        SerialPort controller;
+        private SerialPort controller;
+        private int category;
 
         public MainScreen()
         {
@@ -37,99 +38,22 @@ namespace EV_Diagnostic_Tool
         {
             if (controller == null)
                 return;
-            chartBox1Chip1Temp.Series.Clear();
-            chartBox1Chip1Voltage.Series.Clear();
+
             progressBarImport.Value = 0;
+            category = 0;
 
             timerSample.Stop();
             Thread.Sleep(500);
             controller.DiscardInBuffer();
             controller.DiscardOutBuffer();
-            controller.WriteLine("IMPORT");
-            Thread.Sleep(50);
-
-            string response = controller.ReadTo("\r\n");
-            int category = 0;
-
-            while (response != "END")
-            {
-                response = controller.ReadTo("\r\n");
-                
-                if (response != "NEXT")
-                {
-                    if (response.Substring(0, 10) == "COMPLETION")
-                        progressBarImport.Value = Convert.ToInt16(response.Substring(10));
-                    else
-                    {
-                        double[] entry_vals = Array.ConvertAll(response.Split(','), double.Parse);
-                        if (category == 0)
-                        {
-                            chartMotorTemp.Series[0].Points.AddXY(entry_vals[3], entry_vals[0]);
-                            chartAcceleratorPedal.Series[0].Points.AddXY(entry_vals[3], entry_vals[1]);
-                            chartBrakePedal.Series[0].Points.AddXY(entry_vals[3], entry_vals[2]);
-                        }
-                        else if (category == 1)
-                        {
-                            for (int count = 0; count < 6; count++)
-                            {
-                                chartBox1Chip1Voltage.Series[count].Points.AddXY(entry_vals[48], entry_vals[count]);
-                                chartBox1Chip2Voltage.Series[count].Points.AddXY(entry_vals[48], entry_vals[count + 6]);
-                                chartBox1Chip3Voltage.Series[count].Points.AddXY(entry_vals[48], entry_vals[count + 12]);
-                                chartBox1Chip4Voltage.Series[count].Points.AddXY(entry_vals[48], entry_vals[count + 18]);
-
-                                chartBox1Chip1Temp.Series[count].Points.AddXY(entry_vals[48], entry_vals[count + 24]);
-                                chartBox1Chip2Temp.Series[count].Points.AddXY(entry_vals[48], entry_vals[count + 30]);
-                                chartBox1Chip3Temp.Series[count].Points.AddXY(entry_vals[48], entry_vals[count + 36]);
-                                chartBox1Chip4Temp.Series[count].Points.AddXY(entry_vals[48], entry_vals[count + 42]);
-                            }           
-                        }
-                        else if (category == 2)
-                        {
-                            for (int count = 0; count < 6; count++)
-                            {
-                                chartBox2Chip1Voltage.Series[count].Points.AddXY(entry_vals[48], entry_vals[count]);
-                                chartBox2Chip2Voltage.Series[count].Points.AddXY(entry_vals[48], entry_vals[count + 6]);
-                                chartBox2Chip3Voltage.Series[count].Points.AddXY(entry_vals[48], entry_vals[count + 12]);
-                                chartBox2Chip4Voltage.Series[count].Points.AddXY(entry_vals[48], entry_vals[count + 18]);
-
-                                chartBox2Chip1Temp.Series[count].Points.AddXY(entry_vals[48], entry_vals[count + 24]);
-                                chartBox2Chip2Temp.Series[count].Points.AddXY(entry_vals[48], entry_vals[count + 30]);
-                                chartBox2Chip3Temp.Series[count].Points.AddXY(entry_vals[48], entry_vals[count + 36]);
-                                chartBox2Chip4Temp.Series[count].Points.AddXY(entry_vals[48], entry_vals[count + 42]);
-                            }
-                        }
-                        else if (category == 3)
-                        {
-                            for (int count = 0; count < 6; count++)
-                            {
-                                chartBox3Chip1Voltage.Series[count].Points.AddXY(entry_vals[48], entry_vals[count]);
-                                chartBox3Chip2Voltage.Series[count].Points.AddXY(entry_vals[48], entry_vals[count + 6]);
-                                chartBox3Chip3Voltage.Series[count].Points.AddXY(entry_vals[48], entry_vals[count + 12]);
-                                chartBox3Chip4Voltage.Series[count].Points.AddXY(entry_vals[48], entry_vals[count + 18]);
-                                
-                                chartBox3Chip1Temp.Series[count].Points.AddXY(entry_vals[48], entry_vals[count + 24]);
-                                chartBox3Chip2Temp.Series[count].Points.AddXY(entry_vals[48], entry_vals[count + 30]);
-                                chartBox3Chip3Temp.Series[count].Points.AddXY(entry_vals[48], entry_vals[count + 36]);
-                                chartBox3Chip4Temp.Series[count].Points.AddXY(entry_vals[48], entry_vals[count + 42]);
-                            }
-                        }
-                    }                        
-                }
-                else
-                {
-                    category++;
-                    progressBarImport.Value = 0;
-                }                    
-            }
-
-            progressBarImport.Value = 100;
-
-            timerSample.Start();
+            controller.WriteLine("IMPORT");            
         }
 
         private void timerSample_Tick(object sender, EventArgs e)
         {
-            string response = string.Empty;
+            //Don't forget that the data received event will be triggered by the real-time readings
+
+            /*string response = string.Empty;
             try
             {
                 controller.DiscardInBuffer();
@@ -151,7 +75,7 @@ namespace EV_Diagnostic_Tool
                 timerSample.Stop();
                 controller = null;
                 labelStatus.Text = "Controller not detected";
-            }
+            }*/
         }
 
         private void FindController()
@@ -208,8 +132,108 @@ namespace EV_Diagnostic_Tool
             else
             {
                 labelStatus.Text = "Controller detected on " + controller.PortName;
+                controller.DataReceived += Controller_DataReceived;
                 timerSample.Start();
             }
+        }
+
+        private void Controller_DataReceived(object sender, SerialDataReceivedEventArgs e)
+        {
+            string response = controller.ReadTo("\r\n");
+
+            if (response == "NEXT")
+            {
+                category++;
+                Invoke((MethodInvoker)delegate
+                {
+                    progressBarImport.Value = 0;
+                });
+            }
+            else if (response == "END")
+            {
+                timerSample.Start();
+                Invoke((MethodInvoker)delegate
+                {
+                    progressBarImport.Value = 100;
+                });
+            }
+            else
+            {
+                if (response.Substring(0, 10) == "COMPLETION")
+                {
+                    Invoke((MethodInvoker)delegate
+                    {
+                        progressBarImport.Value = Convert.ToInt16(response.Substring(10));
+                    });
+                }                    
+                else
+                {
+                    double[] entry_vals = Array.ConvertAll(response.Split(','), double.Parse);
+                    if (category == 0)
+                    {
+                        Invoke((MethodInvoker)delegate
+                        {
+                            chartMotorTemp.Series[0].Points.AddXY(entry_vals[3], entry_vals[0]);
+                            chartAcceleratorPedal.Series[0].Points.AddXY(entry_vals[3], entry_vals[1]);
+                            chartBrakePedal.Series[0].Points.AddXY(entry_vals[3], entry_vals[2]);
+                        });
+                    }
+                    else if (category == 1)
+                    {
+                        Invoke((MethodInvoker)delegate
+                        {
+                            for (int count = 0; count < 6; count++)
+                            {
+                                chartBox1Chip1Voltage.Series[count].Points.AddXY(entry_vals[48], entry_vals[count]);
+                                chartBox1Chip2Voltage.Series[count].Points.AddXY(entry_vals[48], entry_vals[count + 6]);
+                                chartBox1Chip3Voltage.Series[count].Points.AddXY(entry_vals[48], entry_vals[count + 12]);
+                                chartBox1Chip4Voltage.Series[count].Points.AddXY(entry_vals[48], entry_vals[count + 18]);
+
+                                chartBox1Chip1Temp.Series[count].Points.AddXY(entry_vals[48], entry_vals[count + 24]);
+                                chartBox1Chip2Temp.Series[count].Points.AddXY(entry_vals[48], entry_vals[count + 30]);
+                                chartBox1Chip3Temp.Series[count].Points.AddXY(entry_vals[48], entry_vals[count + 36]);
+                                chartBox1Chip4Temp.Series[count].Points.AddXY(entry_vals[48], entry_vals[count + 42]);
+                            }
+                        });
+                    }
+                    else if (category == 2)
+                    {
+                        Invoke((MethodInvoker)delegate
+                        {
+                            for (int count = 0; count < 6; count++)
+                            {
+                                chartBox2Chip1Voltage.Series[count].Points.AddXY(entry_vals[48], entry_vals[count]);
+                                chartBox2Chip2Voltage.Series[count].Points.AddXY(entry_vals[48], entry_vals[count + 6]);
+                                chartBox2Chip3Voltage.Series[count].Points.AddXY(entry_vals[48], entry_vals[count + 12]);
+                                chartBox2Chip4Voltage.Series[count].Points.AddXY(entry_vals[48], entry_vals[count + 18]);
+
+                                chartBox2Chip1Temp.Series[count].Points.AddXY(entry_vals[48], entry_vals[count + 24]);
+                                chartBox2Chip2Temp.Series[count].Points.AddXY(entry_vals[48], entry_vals[count + 30]);
+                                chartBox2Chip3Temp.Series[count].Points.AddXY(entry_vals[48], entry_vals[count + 36]);
+                                chartBox2Chip4Temp.Series[count].Points.AddXY(entry_vals[48], entry_vals[count + 42]);
+                            }
+                        });
+                    }
+                    else if (category == 3)
+                    {
+                        Invoke((MethodInvoker)delegate
+                        {
+                            for (int count = 0; count < 6; count++)
+                            {
+                                chartBox3Chip1Voltage.Series[count].Points.AddXY(entry_vals[48], entry_vals[count]);
+                                chartBox3Chip2Voltage.Series[count].Points.AddXY(entry_vals[48], entry_vals[count + 6]);
+                                chartBox3Chip3Voltage.Series[count].Points.AddXY(entry_vals[48], entry_vals[count + 12]);
+                                chartBox3Chip4Voltage.Series[count].Points.AddXY(entry_vals[48], entry_vals[count + 18]);
+
+                                chartBox3Chip1Temp.Series[count].Points.AddXY(entry_vals[48], entry_vals[count + 24]);
+                                chartBox3Chip2Temp.Series[count].Points.AddXY(entry_vals[48], entry_vals[count + 30]);
+                                chartBox3Chip3Temp.Series[count].Points.AddXY(entry_vals[48], entry_vals[count + 36]);
+                                chartBox3Chip4Temp.Series[count].Points.AddXY(entry_vals[48], entry_vals[count + 42]);
+                            }
+                        });
+                    }
+                }
+            }                       
         }
     }
 }
